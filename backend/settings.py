@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import sys
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-hb7uh^%%zt=ftej6zpd%*ih+enzu(!#&#n8chj)!s4cd_75f^5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "*", "44.210.221.162", "3.225.61.211"]
 
@@ -110,14 +111,18 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {  # Configuração para PostgreSQL
-        "ENGINE": "django.db.backends.postgresql",  # Usando PostgreSQL
-        "NAME": os.getenv("POSTGRES_DB"),  # Nome do banco de dados
-        "USER": os.getenv("POSTGRES_USER"),  # Usuário do banco de dados
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),  # Senha do banco de dados
-        "HOST": os.getenv("POSTGRES_HOST"),  # Nome do serviço do DB no Compose
-        "PORT": os.getenv("POSTGRES_PORT"),  # Porta do PostgreSQL
-    },
+    # "default": {  # Configuração para PostgreSQL
+    #     "ENGINE": "django.db.backends.postgresql",  # Usando PostgreSQL
+    #     "NAME": os.getenv("POSTGRES_DB"),  # Nome do banco de dados
+    #     "USER": os.getenv("POSTGRES_USER"),  # Usuário do banco de dados
+    #     "PASSWORD": os.getenv("POSTGRES_PASSWORD"),  # Senha do banco de dados
+    #     "HOST": os.getenv("POSTGRES_HOST"),  # Nome do serviço do DB no Compose
+    #     "PORT": os.getenv("POSTGRES_PORT"),  # Porta do PostgreSQL
+    # },
+    "default": dj_database_url.config(
+        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite"),
+        conn_max_age=600
+    ),
     "sqlite": {  # SQLite
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
@@ -160,6 +165,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = []  # Onde colocar arquivos estáticos, como imgs
 
 MEDIA_URL = "/media/"
