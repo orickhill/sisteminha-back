@@ -182,6 +182,9 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
 
+if AWS_S3_ENDPOINT_URL:
+    SUPABASE_PROJECT_ID = AWS_S3_ENDPOINT_URL.split('//')[1].split('.')[0]
+    AWS_S3_CUSTOM_DOMAIN = f"{SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}"
 
 STORAGES = {
     "default": {
