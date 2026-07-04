@@ -48,7 +48,7 @@ py-serializable==2.1.0
 pydot==4.0.1
 Pygments==2.19.2
 PyJWT==2.10.1
-pyparsing==3.2.5
+pyparsing==3.3.2
 pytest==9.0.2
 pytest-django==4.11.1
 python-dateutil==2.9.0.post0
