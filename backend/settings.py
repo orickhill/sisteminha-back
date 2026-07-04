@@ -185,5 +185,27 @@ MEDIA_ROOT = BASE_DIR / "media"  # Diretório para armazenar arquivos de mídia
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+
 if "test" in sys.argv:
     DATABASES["default"] = DATABASES["sqlite"]
