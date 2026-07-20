@@ -162,6 +162,7 @@ class DesenvolvedorLoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
         user_request = User.objects.get(email=email)
+        print("linha 165")
 
         if user_request is not None:
             username = user_request.username
@@ -197,6 +198,7 @@ class DesenvolvedorLoginView(ObtainAuthToken):
                     status=status.HTTP_401_UNAUTHORIZED,
                 )
         else:
+            print("linha 200")
             return Response(
                 {"message": "Usuário ou Senha Inválido"},
                 status=status.HTTP_401_UNAUTHORIZED,
