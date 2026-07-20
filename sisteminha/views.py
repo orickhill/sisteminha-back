@@ -25,6 +25,7 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
+from django.shortcuts import get_object_or_404
 
 ## Permissions
 from rest_framework.permissions import IsAuthenticated
@@ -161,8 +162,8 @@ class DesenvolvedorRegistrationView(APIView):
 class DesenvolvedorLoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
-        user_request = User.objects.get(email=email)
-        print("linha 165")
+        # user_request = User.objects.get(email=email)
+        user_request = get_object_or_404(User, email=email)
 
         if user_request is not None:
             username = user_request.username
@@ -198,7 +199,6 @@ class DesenvolvedorLoginView(ObtainAuthToken):
                     status=status.HTTP_401_UNAUTHORIZED,
                 )
         else:
-            print("linha 200")
             return Response(
                 {"message": "Usuário ou Senha Inválido"},
                 status=status.HTTP_401_UNAUTHORIZED,
