@@ -122,7 +122,14 @@ class DesenvolvedorRegistrationView(APIView):
         try:
             user_serializer = UserSerializer(data=user_data)
             if user_serializer.is_valid():  # Verifica se os dados do user são válidos
-                user = user_serializer.save()
+                cpfAlreadyExists = Desenvolvedor.objects.filter(cpf=cpf)
+                if not(cpfAlreadyExists):
+                    user = user_serializer.save()
+                else:
+                    return Response(
+                        {"cpf": "Desenvolvedor with this cpf already exists"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
             else:
                 return Response(
                     user_serializer.errors, status=status.HTTP_400_BAD_REQUEST
