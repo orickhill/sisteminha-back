@@ -16,6 +16,7 @@ from sisteminha.views import (
     LogoutUsuarioView,
     DesenvolvedorRegistrationView,
     DesenvolvedorLoginView,
+    DesenvolvedorAtualView,
     MicroempreendedorRegistrationView,
     MicroempreendedorLoginView,
 )
@@ -76,6 +77,9 @@ urlpatterns = [
         "sisteminha_api/token/verify/", TokenVerifyView.as_view(), name="token_verify"
     ),
     # Endpoints de autenticação personalizados
+    path(
+        "sisteminha_api/auth/me/desenvolvedor", DesenvolvedorAtualView.as_view(), name="desenvolvedor_logado"
+    ),
     path(
         "sisteminha_api/auth/registro/", RegistroUsuarioView.as_view(), name="registro"
     ),

@@ -204,6 +204,17 @@ class DesenvolvedorLoginView(ObtainAuthToken):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
+class DesenvolvedorAtualView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            desenvolvedor = request.user.desenvolvedor
+            serializer = DesenvolvedorSerializer(desenvolvedor)
+            return Response(serializer.data)
+        except Desenvolvedor.DoesNotExist:
+            return Response({"detail": "Desenvolvedor não encontrado"}, )
+
 
 class MicroempreendedorRegistrationView(APIView):
     def post(self, request):
