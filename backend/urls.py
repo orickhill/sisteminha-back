@@ -78,7 +78,7 @@ urlpatterns = [
     ),
     # Endpoints de autenticação personalizados
     path(
-        "sisteminha_api/auth/me/desenvolvedor", DesenvolvedorAtualView.as_view(), name="desenvolvedor_logado"
+        "sisteminha_api/auth/me/desenvolvedor/", DesenvolvedorAtualView.as_view(), name="desenvolvedor_logado"
     ),
     path(
         "sisteminha_api/auth/registro/", RegistroUsuarioView.as_view(), name="registro"
